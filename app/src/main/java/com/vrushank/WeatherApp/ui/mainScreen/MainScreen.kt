@@ -19,6 +19,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -28,27 +29,29 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.vrushank.WeatherApp.services.model.UiState
 
 @Composable
-fun MainScreen(uiState: UiState) {
+fun MainScreen(list: List<MutableState<UiState>>) {
     Surface(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.LightGray)
     ) {
-        Column(
+        LazyColumn (
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
             modifier = Modifier
                 .padding(8.dp)
         ) {
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(300.dp)
-            ) {
-                Column {
+            items(list) { item ->
+
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(300.dp)
+                ) {
+                    Column {
 
                         Row(modifier = Modifier.fillMaxHeight(0.2f)) {
-                            uiState.country?.let {
+                            item.value.country?.let {
                                 Text(
                                     text = "Country Name = $it",
                                     fontSize = 16.sp
@@ -56,7 +59,7 @@ fun MainScreen(uiState: UiState) {
                             }
                         }
                         Row(modifier = Modifier.fillMaxHeight(0.2f)) {
-                            uiState.localtime?.let {
+                            item.value.localtime?.let {
                                 Text(
                                     text = "Local Time = $it",
                                     fontSize = 16.sp
@@ -66,7 +69,7 @@ fun MainScreen(uiState: UiState) {
 
 
                         Row(modifier = Modifier.fillMaxHeight(0.2f)) {
-                            uiState.feelslike?.let {
+                            item.value.feelslike?.let {
                                 Text(
                                     text = "Feels Like = $it",
                                     fontSize = 16.sp
@@ -74,7 +77,7 @@ fun MainScreen(uiState: UiState) {
                             }
                         }
                         Row(modifier = Modifier.fillMaxHeight(0.2f)) {
-                            uiState.humidity?.let {
+                            item.value.humidity?.let {
                                 Text(
                                     text = "Humidity = $it",
                                     fontSize = 16.sp
@@ -83,11 +86,12 @@ fun MainScreen(uiState: UiState) {
                         }
 
 
+                    }
+
                 }
 
             }
         }
-
     }
 
 }

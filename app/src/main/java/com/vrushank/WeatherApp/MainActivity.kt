@@ -10,12 +10,16 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.viewmodel.viewModelFactory
+import com.vrushank.WeatherApp.services.model.UiState
 import com.vrushank.WeatherApp.services.repo.WeatherRepository
 import com.vrushank.WeatherApp.ui.mainScreen.MainScreen
 import com.vrushank.WeatherApp.ui.mainScreen.WeatherViewModel
@@ -39,10 +43,12 @@ class MainActivity : ComponentActivity() {
                     }
                 }
             }
-            val uiState = vm.uiState
+            val list = listOf(vm.uiState1,vm.uiState2)
+//            val uiState1 = vm.uiState1
+//            val uiState2 = vm.uiState2
             WeatherAppTheme {
                 MainScreen(
-                uiState.value
+                list
                 )
             }
         }
